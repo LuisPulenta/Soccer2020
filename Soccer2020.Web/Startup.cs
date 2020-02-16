@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Soccer2020.Web.Data;
+using Soccer2020.Web.Helpers;
 
 namespace Soccer2020.Web
 {
@@ -32,13 +33,15 @@ namespace Soccer2020.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
+            
+            services.AddTransient<SeedDb>();
             services.AddDbContext<DataContext>(cfg =>
             {
                 cfg.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
-
+            services.AddScoped<IImageHelper, ImageHelper>();
+            services.AddScoped<IConverterHelper, ConverterHelper>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

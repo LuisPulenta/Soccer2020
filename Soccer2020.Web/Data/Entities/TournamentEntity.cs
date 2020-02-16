@@ -18,6 +18,7 @@ namespace Soccer2020.Web.Data.Entities
             [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
             public DateTime StartDate { get; set; }
 
+            [DataType(DataType.DateTime)]
             [Display(Name = "Fecha Inicio")]
             [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
             public DateTime StartDateLocal => StartDate.ToLocalTime();
@@ -27,6 +28,7 @@ namespace Soccer2020.Web.Data.Entities
             [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
             public DateTime EndDate { get; set; }
 
+            [DataType(DataType.DateTime)]
             [Display(Name = "Fecha Fin")]
             [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
             public DateTime EndDateLocal => EndDate.ToLocalTime();

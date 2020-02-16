@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Soccer2020.Web.Data.Entities
 {
@@ -13,5 +14,7 @@ namespace Soccer2020.Web.Data.Entities
 
         [Display(Name = "Logo")]
         public string LogoPath { get; set; }
+        
+        public ICollection<GroupDetailEntity> GroupDetails { get; set; }
     }
 }

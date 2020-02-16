@@ -1,4 +1,4 @@
-﻿@model Soccer2020.Web.Models.TeamViewModel
+﻿@model Soccer2020.Web.Models.TournamentViewModel
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,7 +6,7 @@
 
 <h2>Editar</h2>
 
-<h4>Equipo</h4>
+<h4>Torneo</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,7 +15,7 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="LogoPath" />
 
-            <partial name="_Team" />
+            <partial name="_Tournament" />
 
             <div class="form-group">
                 <input type="submit" value="Grabar" class="btn btn-primary" />
@@ -23,7 +23,6 @@
             </div>
         </form>
     </div>
-
     <div class="col-md-4">
         @if (!string.IsNullOrEmpty(Model.LogoPath))
         {
@@ -32,6 +31,6 @@
     </div>
 </div>
 
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
