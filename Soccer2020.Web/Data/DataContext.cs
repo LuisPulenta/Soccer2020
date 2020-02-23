@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Soccer2020.Web.Data.Entities;
 
 namespace Soccer2020.Web.Data
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<UserEntity>
     {
 
         #region Constructor
@@ -17,6 +18,7 @@ namespace Soccer2020.Web.Data
         public DbSet<GroupEntity> Groups { get; set; }
         public DbSet<MatchEntity> Matches { get; set; }
         public DbSet<TournamentEntity> Tournaments { get; set; }
+        public DbSet<PredictionEntity> Predictions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Soccer2020.Web.Data;
 using Soccer2020.Web.Data.Entities;
@@ -9,6 +10,8 @@ using System.Threading.Tasks;
 
 namespace Soccer2020.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
+
     public class TeamsController : Controller
     {
         private readonly DataContext _context;

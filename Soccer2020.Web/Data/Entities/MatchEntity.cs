@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Soccer2020.Web.Data.Entities
@@ -22,14 +23,16 @@ namespace Soccer2020.Web.Data.Entities
         public TeamEntity Visitor { get; set; }
 
         [Display(Name = "GL")]
-        public int GoalsLocal { get; set; }
+        public int? GoalsLocal { get; set; }
 
         [Display(Name = "GV")]
-        public int GoalsVisitor { get; set; }
+        public int? GoalsVisitor { get; set; }
 
         [Display(Name = "Cerrado?")]
         public bool IsClosed { get; set; }
 
         public GroupEntity Group { get; set; }
+
+        public ICollection<PredictionEntity> Predictions { get; set; }
     }
 }

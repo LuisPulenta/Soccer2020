@@ -1,5 +1,7 @@
-﻿using Soccer2020.Web.Data.Entities;
+﻿using Soccer2020.Common.Models;
+using Soccer2020.Web.Data.Entities;
 using Soccer2020.Web.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Soccer2020.Web.Helpers
@@ -25,6 +27,10 @@ namespace Soccer2020.Web.Helpers
         Task<MatchEntity> ToMatchEntityAsync(MatchViewModel model, bool isNew);
 
         MatchViewModel ToMatchViewModel(MatchEntity matchEntity);
+
+        TournamentResponse ToTournamentResponse(TournamentEntity tournamentEntity);
+
+        List<TournamentResponse> ToTournamentResponse(List<TournamentEntity> tournamentEntities);
 
     }
 }
