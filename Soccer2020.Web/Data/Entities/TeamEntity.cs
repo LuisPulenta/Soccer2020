@@ -18,5 +18,9 @@ namespace Soccer2020.Web.Data.Entities
         public ICollection<GroupDetailEntity> GroupDetails { get; set; }
         
         public ICollection<UserEntity> Users { get; set; }
+
+        public string LogoFullPath => string.IsNullOrEmpty(LogoPath)
+           ? "noimage"//null
+           : $"http://keypress.serveftp.net:88/Soccer2020Api{LogoPath.Substring(1)}";
     }
 }

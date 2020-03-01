@@ -1,5 +1,7 @@
 ﻿using Prism;
 using Prism.Ioc;
+using Soccer2020.Common.Helpers;
+using Soccer2020.Common.Services;
 using Soccer2020.Prism.ViewModels;
 using Soccer2020.Prism.Views;
 using Xamarin.Forms;
@@ -10,11 +12,6 @@ namespace Soccer2020.Prism
 {
     public partial class App
     {
-        /* 
-         * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
-         * This imposes a limitation in which the App class must have a default constructor. 
-         * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
-         */
         public App() : this(null) { }
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
@@ -22,14 +19,25 @@ namespace Soccer2020.Prism
         protected override async void OnInitialized()
         {
             InitializeComponent();
-
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("/SoccerMasterDetailPage/NavigationPage/TournamentsPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IApiService, ApiService>();
+            containerRegistry.Register<ITransformHelper, TransformHelper>();
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
+            containerRegistry.RegisterForNavigation<TournamentsPage, TournamentsPageViewModel>();
+            containerRegistry.RegisterForNavigation<GroupsPage, GroupsPageViewModel>();
+            containerRegistry.RegisterForNavigation<MatchesPage, MatchesPageViewModel>();
+            containerRegistry.RegisterForNavigation<ClosedMatchesPage, ClosedMatchesPageViewModel>();
+            containerRegistry.RegisterForNavigation<TournamentTabbedPage, TournamentTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<SoccerMasterDetailPage, SoccerMasterDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<MyPredictionsPage, MyPredictionsPageViewModel>();
+            containerRegistry.RegisterForNavigation<MyPositionsPage, MyPositionsPageViewModel>();
+            containerRegistry.RegisterForNavigation<ModifyUserPage, ModifyUserPageViewModel>();
+
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
         }
     }
 }
