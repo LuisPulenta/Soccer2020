@@ -6,6 +6,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Soccer2020.Prism.Views.GroupsPage"
              IconImageSource="ic_vpn_key"
+             BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
 
   <StackLayout Padding="5">

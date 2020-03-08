@@ -11,6 +11,7 @@ namespace Soccer2020.Prism.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
         private List<TournamentItemViewModel> _tournaments;
+        private bool _isRunning;
 
         public TournamentsPageViewModel(
             INavigationService navigationService,
@@ -27,14 +28,31 @@ namespace Soccer2020.Prism.ViewModels
             get => _tournaments;
             set => SetProperty(ref _tournaments, value);
         }
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set => SetProperty(ref _isRunning, value);
+        }
 
         private async void LoadTournamentsAsync()
         {
+            IsRunning = true;
             string url = App.Current.Resources["UrlAPI"].ToString();
+            var connection = await _apiService.CheckConnectionAsync(url);
+
+            if (!connection)
+            {
+                IsRunning = false;
+                await App.Current.MainPage.DisplayAlert("Error", "Revise su conexión a Internet.", "Aceptar");
+                return;
+            }
+
+
             Response response = await _apiService.GetListAsync<TournamentResponse>(
                 url,
                 "api",
                 "/Tournaments");
+            IsRunning = false;
 
             if (!response.IsSuccess)
             {

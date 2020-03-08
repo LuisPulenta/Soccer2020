@@ -5,6 +5,7 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Soccer2020.Prism.Views.MatchesPage"
              IconImageSource="ic_grade"
+             BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
 
   <StackLayout Padding="5">

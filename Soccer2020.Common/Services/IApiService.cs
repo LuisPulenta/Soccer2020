@@ -9,5 +9,7 @@ namespace Soccer2020.Common.Services
             string urlBase,
             string servicePrefix,
             string controller);
+
+        Task<bool> CheckConnectionAsync(string url);
     }
 }

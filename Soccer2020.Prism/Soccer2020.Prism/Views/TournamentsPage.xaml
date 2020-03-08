@@ -3,28 +3,33 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="http://prismlibrary.com"
              xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Soccer2020.Prism.Views.TournamentsPage"
+             BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">
 
-  <StackLayout Padding="5">
-    <CollectionView ItemsSource="{Binding Tournaments}">
-      <CollectionView.ItemsLayout>
-        <GridItemsLayout Orientation="Vertical"/>
-      </CollectionView.ItemsLayout>
-      <CollectionView.ItemTemplate>
-        <DataTemplate>
-          <Grid>
-            <Grid.GestureRecognizers>
-              <TapGestureRecognizer Command="{Binding SelectTournamentCommand}"/>
-            </Grid.GestureRecognizers>
+  <AbsoluteLayout>
+    <StackLayout Padding="5"
+                AbsoluteLayout.LayoutBounds="0,0,1,1"
+                AbsoluteLayout.LayoutFlags="All">
+      <CollectionView ItemsSource="{Binding Tournaments}">
+        <CollectionView.ItemsLayout>
+          <GridItemsLayout Orientation="Vertical"/>
+        </CollectionView.ItemsLayout>
+        <CollectionView.ItemTemplate>
+          <DataTemplate>
+            <Grid>
+              <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SelectTournamentCommand}"/>
+              </Grid.GestureRecognizers>
 
-            <Grid.ColumnDefinitions>
-              <ColumnDefinition Width="Auto" />
-              <ColumnDefinition Width="*" />
-              <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <ffimageloading:CachedImage Grid.Column="0"
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+              <ffimageloading:CachedImage Grid.Column="0"
                                                     Aspect="AspectFill"
                                                     Source="{Binding LogoFullPath}" 
                                                     CacheDuration= "50"
@@ -32,26 +37,41 @@
                                                     RetryCount= "3"
                                                     RetryDelay= "600"
                                                     WidthRequest="100"/>
-            <StackLayout Grid.Column="1"
+              <StackLayout Grid.Column="1"
                                      VerticalOptions="Center">
-              <Label Text="{Binding Name}" 
+                <Label Text="{Binding Name}" 
                                    FontAttributes="Bold"
                                    FontSize="Medium"
                                    LineBreakMode="TailTruncation" />
-              <Label Text="{Binding StartDateLocal, StringFormat='{0:dd/MM/yyyy}'}"
+                <Label Text="{Binding StartDateLocal, StringFormat='{0:dd/MM/yyyy}'}"
                                    LineBreakMode="TailTruncation"
                                    FontAttributes="Italic" 
                                    VerticalOptions="End" />
-              <Label Text="{Binding EndDateLocal, StringFormat='{0:dd/MM/yyyy}'}"
+                <Label Text="{Binding EndDateLocal, StringFormat='{0:dd/MM/yyyy}'}"
                                    LineBreakMode="TailTruncation"
                                    FontAttributes="Italic" 
                                    VerticalOptions="End" />
-            </StackLayout>
-            <Image Grid.Column="2" 
+              </StackLayout>
+              <Image Grid.Column="2" 
                                Source="ic_more_vert"/>
-          </Grid>
-        </DataTemplate>
-      </CollectionView.ItemTemplate>
-    </CollectionView>
-  </StackLayout>
+            </Grid>
+          </DataTemplate>
+        </CollectionView.ItemTemplate>
+      </CollectionView>
+    </StackLayout>
+    <busyindicator:SfBusyIndicator AnimationType="Gear"
+                                     AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                                     AbsoluteLayout.LayoutFlags="All"
+                                     BackgroundColor="Transparent"
+                                     HorizontalOptions="Center"
+                                     TextColor="White"
+                                     IsVisible="{Binding IsRunning}"
+                                     Title="Cargando..."
+                                     VerticalOptions="Center"
+                                     ViewBoxWidth="80"
+                                     ViewBoxHeight="80" />
+
+  </AbsoluteLayout>  
+  
+  
 </ContentPage>
