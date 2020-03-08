@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Soccer2020.Common.Enums;
+using Soccer2020.Web.Data.Entities;
 using Soccer2020.Web.Helpers;
 using Soccer2020.Web.Models;
 using System.Linq;
@@ -9,10 +11,14 @@ namespace Soccer2020.Web.Controllers
     public class AccountController : Controller
     {
         private readonly IUserHelper _userHelper;
+        private readonly IImageHelper _imageHelper;
+        private readonly ICombosHelper _combosHelper;
 
-        public AccountController(IUserHelper userHelper)
+        public AccountController(IUserHelper userHelper, IImageHelper imageHelper, ICombosHelper combosHelper)
         {
             _userHelper = userHelper;
+            _imageHelper = imageHelper;
+            _combosHelper = combosHelper;
         }
 
         public IActionResult Login()
@@ -51,6 +57,60 @@ namespace Soccer2020.Web.Controllers
         {
             await _userHelper.LogoutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult NotAuthorized()
+        {
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+            var model = new AddUserViewModel
+            {
+                Teams = _combosHelper.GetComboTeams()
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                string path = string.Empty;
+
+                if (model.PictureFile != null)
+                {
+                    path = await _imageHelper.UploadImageAsync(model.PictureFile, "Users");
+                }
+
+                UserEntity user = await _userHelper.AddUserAsync(model, path, UserType.User);
+                if (user == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Este mail ya existe");
+                    return View(model);
+                }
+
+                LoginViewModel loginViewModel = new LoginViewModel
+                {
+                    Password = model.Password,
+                    RememberMe = false,
+                    Username = model.Username
+                };
+
+                var result2 = await _userHelper.LoginAsync(loginViewModel);
+
+                if (result2.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            model.Teams = _combosHelper.GetComboTeams();
+            return View(model);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Soccer2020.Common.Enums;
 using Soccer2020.Web.Data.Entities;
 using Soccer2020.Web.Models;
 using System.Threading.Tasks;
@@ -20,6 +21,8 @@ namespace Soccer2020.Web.Helpers
         Task<SignInResult> LoginAsync(LoginViewModel model);
         
         Task LogoutAsync();
+
+        Task<UserEntity> AddUserAsync(AddUserViewModel model, string path, UserType userType);
 
     }
 }

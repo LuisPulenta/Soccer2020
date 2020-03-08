@@ -14,4 +14,8 @@
     <ProjectReference Include="..\Soccer2020.Common\Soccer2020.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\Users\" />
+  </ItemGroup>
+
 </Project>
