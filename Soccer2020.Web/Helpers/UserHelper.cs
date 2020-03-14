@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Soccer2020.Common.Enums;
 using Soccer2020.Web.Data;
 using Soccer2020.Web.Data.Entities;
 using Soccer2020.Web.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace Soccer2020.Web.Helpers
@@ -48,10 +50,22 @@ namespace Soccer2020.Web.Helpers
             }
         }
 
-        public async Task<UserEntity> GetUserByEmailAsync(string email)
+        
+
+        public async Task<UserEntity> GetUserAsync(Guid userId)
         {
-            return await _userManager.FindByEmailAsync(email);
+            return await _context.Users
+                .Include(u => u.Team)
+                .FirstOrDefaultAsync(u => u.Id == userId.ToString());
         }
+
+        public async Task<UserEntity> GetUserAsync(string email)
+        {
+            return await _context.Users
+                .Include(u => u.Team)
+                .FirstOrDefaultAsync(u => u.Email == email);
+        }
+
 
         public async Task<bool> IsUserInRoleAsync(UserEntity user, string roleName)
         {
@@ -94,10 +108,21 @@ namespace Soccer2020.Web.Helpers
                 return null;
             }
 
-            UserEntity newUser = await GetUserByEmailAsync(model.Username);
+            UserEntity newUser = await GetUserAsync(model.Username);
             await AddUserToRoleAsync(newUser, userEntity.UserType.ToString());
             return newUser;
         }
+
+        public async Task<IdentityResult> ChangePasswordAsync(UserEntity user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
+        }
+
+        public async Task<IdentityResult> UpdateUserAsync(UserEntity user)
+        {
+            return await _userManager.UpdateAsync(user);
+        }
+
 
     }
 }
