@@ -50,7 +50,12 @@ namespace Soccer2020.Web.Helpers
             }
         }
 
-        
+        public async Task<UserEntity> GetUserAsync(string email)
+        {
+            return await _context.Users
+                .Include(u => u.Team)
+                .FirstOrDefaultAsync(u => u.Email == email);
+        }
 
         public async Task<UserEntity> GetUserAsync(Guid userId)
         {
@@ -59,14 +64,7 @@ namespace Soccer2020.Web.Helpers
                 .FirstOrDefaultAsync(u => u.Id == userId.ToString());
         }
 
-        public async Task<UserEntity> GetUserAsync(string email)
-        {
-            return await _context.Users
-                .Include(u => u.Team)
-                .FirstOrDefaultAsync(u => u.Email == email);
-        }
-
-
+   
         public async Task<bool> IsUserInRoleAsync(UserEntity user, string roleName)
         {
             return await _userManager.IsInRoleAsync(user, roleName);
@@ -123,6 +121,20 @@ namespace Soccer2020.Web.Helpers
             return await _userManager.UpdateAsync(user);
         }
 
+        public async Task<SignInResult> ValidatePasswordAsync(UserEntity user, string password)
+        {
+            return await _signInManager.CheckPasswordSignInAsync(user, password, false);
+        }
+
+        public async Task<IdentityResult> ConfirmEmailAsync(UserEntity user, string token)
+        {
+            return await _userManager.ConfirmEmailAsync(user, token);
+        }
+
+        public async Task<string> GenerateEmailConfirmationTokenAsync(UserEntity user)
+        {
+            return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        }
 
     }
 }

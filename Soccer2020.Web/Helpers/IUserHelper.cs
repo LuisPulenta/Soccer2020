@@ -31,5 +31,10 @@ namespace Soccer2020.Web.Helpers
 
         Task<IdentityResult> UpdateUserAsync(UserEntity user);
 
+        Task<SignInResult> ValidatePasswordAsync(UserEntity user, string password);
+
+        Task<string> GenerateEmailConfirmationTokenAsync(UserEntity user);
+
+        Task<IdentityResult> ConfirmEmailAsync(UserEntity user, string token);
     }
 }
