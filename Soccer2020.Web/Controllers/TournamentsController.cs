@@ -19,16 +19,19 @@ namespace Soccer2020.Web.Controllers
         private readonly IConverterHelper _converterHelper;
         private readonly IImageHelper _imageHelper;
         private readonly ICombosHelper _combosHelper;
+        private readonly IMatchHelper _matchHelper;
 
         public TournamentsController(DataContext context,
                                      IConverterHelper converterHelper,
                                      IImageHelper imageHelper,
-                                     ICombosHelper combosHelper)
+                                     ICombosHelper combosHelper,
+                                     IMatchHelper matchHelper)
         {
             _context = context;
             _converterHelper = converterHelper;
             _imageHelper = imageHelper;
             _combosHelper = combosHelper;
+            _matchHelper = matchHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -460,6 +463,52 @@ namespace Soccer2020.Web.Controllers
             return RedirectToAction($"{nameof(DetailsGroup)}/{matchEntity.Group.Id}");
         }
 
+        public async Task<IActionResult> CloseMatch(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var matchEntity = await _context.Matches
+                .Include(m => m.Group)
+                .Include(m => m.Local)
+                .Include(m => m.Visitor)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (matchEntity == null)
+            {
+                return NotFound();
+            }
+
+            var model = new CloseMatchViewModel
+            {
+                Group = matchEntity.Group,
+                GroupId = matchEntity.Group.Id,
+                Local = matchEntity.Local,
+                LocalId = matchEntity.Local.Id,
+                MatchId = matchEntity.Id,
+                Visitor = matchEntity.Visitor,
+                VisitorId = matchEntity.Visitor.Id
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CloseMatch(CloseMatchViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _matchHelper.CloseMatchAsync(model.MatchId, model.GoalsLocal.Value, model.GoalsVisitor.Value);
+                return RedirectToAction($"{nameof(DetailsGroup)}/{model.GroupId}");
+            }
+
+            model.Group = await _context.Groups.FindAsync(model.GroupId);
+            model.Local = await _context.Teams.FindAsync(model.LocalId);
+            model.Visitor = await _context.Teams.FindAsync(model.VisitorId);
+            return View(model);
+        }
 
     }
 }
