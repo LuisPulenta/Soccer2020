@@ -36,5 +36,7 @@ namespace Soccer2020.Web.Helpers
 
         MatchResponse ToMatchResponse(MatchEntity matchEntity);
 
+        UserResponse ToUserResponse(UserEntity user);
+
     }
 }
