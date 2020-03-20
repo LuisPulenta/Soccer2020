@@ -27,5 +27,10 @@ namespace Soccer2020.Common.Models
         public string FullName => $"{FirstName} {LastName}";
 
         public string FullNameWithDocument => $"{FirstName} {LastName} - {Document}";
+
+        public string PictureFullPath => string.IsNullOrEmpty(PicturePath)
+    ? "noimage"//null
+: $"http://keypress.serveftp.net:88/Soccer2020Api{PicturePath.Substring(1)}";
+
     }
 }

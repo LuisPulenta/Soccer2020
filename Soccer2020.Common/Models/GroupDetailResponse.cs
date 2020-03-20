@@ -14,7 +14,7 @@
 
         public int MatchesLost { get; set; }
 
-        public int Points => MatchesWon * 3 + MatchesTied;
+        public int? Points => MatchesWon * 3 + MatchesTied;
 
         public int GoalsFor { get; set; }
 

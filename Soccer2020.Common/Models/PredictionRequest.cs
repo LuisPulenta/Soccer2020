@@ -9,6 +9,12 @@ namespace Soccer2020.Common.Models
         public Guid UserId { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es requerido.")]
-        public int TournamentId { get; set; }
+        public int MatchId { get; set; }
+
+        [Required(ErrorMessage = "El campo {0} es requerido.")]
+        public int GoalsLocal { get; set; }
+
+        [Required(ErrorMessage = "El campo {0} es requerido.")]
+        public int GoalsVisitor { get; set; }
     }
 }

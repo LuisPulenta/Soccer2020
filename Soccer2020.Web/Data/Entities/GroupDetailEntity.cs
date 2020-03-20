@@ -21,7 +21,7 @@ namespace Soccer2020.Web.Data.Entities
         public int MatchesLost { get; set; }
 
         [Display(Name = "Pts")]
-        public int Points => MatchesWon * 3 + MatchesTied;
+        public int? Points => MatchesWon * 3 + MatchesTied;
 
         [Display(Name = "GF")]
         public int GoalsFor { get; set; }
