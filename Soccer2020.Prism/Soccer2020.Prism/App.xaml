@@ -12,6 +12,17 @@
 
       <!-- Parameters -->
       <x:String x:Key="UrlAPI">http://keypress.serveftp.net:88/Soccer2020Api/</x:String>
+      <x:String x:Key="UrlNoImage">noimage.png</x:String>
+
+
+      <!-- Colors -->
+      <Color x:Key="ColorBackground">#54E85D</Color>
+      <Color x:Key="ColorPrimary">#191919</Color>
+      <Color x:Key="ColorSecondary">#90FF69</Color>
+      <Color x:Key="ColorDanger">#FFFFFF</Color>
+      <Color x:Key="ColorAccent">#38006A</Color>
+      <Color x:Key="ColorFont">#191919</Color>
+      <Color x:Key="ColorFontInverse">#FFFFFF</Color>
 
       <!-- Data Templates -->
       <DataTemplate x:Key="MatchTemplate">
@@ -62,14 +73,7 @@
       </DataTemplate>
 
 
-      <!-- Colors -->
-      <Color x:Key="ColorBackground">#54E85D</Color>
-      <Color x:Key="ColorPrimary">#191919</Color>
-      <Color x:Key="ColorSecondary">#90FF69</Color>
-      <Color x:Key="ColorDanger">#FFFFFF</Color>
-      <Color x:Key="ColorAccent">#38006A</Color>
-      <Color x:Key="ColorFont">#191919</Color>
-      <Color x:Key="ColorFontInverse">#FFFFFF</Color>
+     
 
 
 
@@ -78,7 +82,8 @@
       <Style TargetType="Button">
         <Setter Property="BackgroundColor" Value="{StaticResource ColorAccent}" />
         <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-        <Setter Property="TextColor" Value="{StaticResource ColorFontInverse}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorFontInverse}"  />
+        <Setter Property="CornerRadius" Value="10" />
       </Style>
 
       <Style TargetType="Label">
@@ -91,6 +96,15 @@
 
       <Style x:Key="DangerButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{StaticResource ColorDanger}" />
+        <Setter Property="TextColor" Value="{StaticResource ColorFont}" />
+      </Style>
+
+      <Style TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorFontInverse}" />
+      </Style>
+
+      <Style TargetType="Picker">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorFontInverse}" />
       </Style>
 
 

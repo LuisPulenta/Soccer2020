@@ -26,6 +26,11 @@ namespace Soccer2020.Common.Models
         [StringLength(20, MinimumLength = 6)]
         public string Password { get; set; }
 
+        [Required]
+        [StringLength(20, MinimumLength = 6)]
+        public string PasswordConfirm { get; set; }
+
+
         public int TeamId { get; set; }
 
         public byte[] PictureArray { get; set; }
