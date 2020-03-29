@@ -11,6 +11,7 @@ using System.Collections.ObjectModel;
 using Soccer2020.Common.Services;
 using System.Collections.Generic;
 using System.Linq;
+using Soccer2020.Prism.Views;
 
 namespace Soccer2020.Prism.ViewModels
 {
@@ -28,6 +29,7 @@ namespace Soccer2020.Prism.ViewModels
         private ObservableCollection<TeamResponse> _teams;
         private DelegateCommand _changeImageCommand;
         private DelegateCommand _saveCommand;
+        private DelegateCommand _changePasswordCommand;
 
         public ModifyUserPageViewModel(INavigationService navigationService, IApiService apiService, IFilesHelper filesHelper)
             : base(navigationService)
@@ -45,6 +47,8 @@ namespace Soccer2020.Prism.ViewModels
         public DelegateCommand ChangeImageCommand => _changeImageCommand ?? (_changeImageCommand = new DelegateCommand(ChangeImageAsync));
 
         public DelegateCommand SaveCommand => _saveCommand ?? (_saveCommand = new DelegateCommand(SaveAsync));
+
+        public DelegateCommand ChangePasswordCommand => _changePasswordCommand ?? (_changePasswordCommand = new DelegateCommand(ChangePasswordAsync));
 
         public ImageSource Image
         {
@@ -265,5 +269,11 @@ namespace Soccer2020.Prism.ViewModels
             Teams = new ObservableCollection<TeamResponse>(list.OrderBy(t => t.Name));
             Team = Teams.FirstOrDefault(t => t.Id == User.Team.Id);
         }
+
+        private async void ChangePasswordAsync()
+        {
+            await _navigationService.NavigateAsync(nameof(ChangePasswordPage));
+        }
+
     }
 }
