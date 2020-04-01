@@ -3,6 +3,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using Soccer2020.Common.Helpers;
 using Soccer2020.Common.Models;
+using Soccer2020.Prism.Views;
 
 namespace Soccer2020.Prism.ViewModels
 {
@@ -10,6 +11,7 @@ namespace Soccer2020.Prism.ViewModels
     {
         private readonly INavigationService _navigationService;
         private DelegateCommand _selectTournamentCommand;
+        private DelegateCommand _selectTournament2Command;
 
         public TournamentItemViewModel(INavigationService navigationService)
         {
@@ -17,6 +19,7 @@ namespace Soccer2020.Prism.ViewModels
         }
 
         public DelegateCommand SelectTournamentCommand => _selectTournamentCommand ?? (_selectTournamentCommand = new DelegateCommand(SelectTournamentAsync));
+        public DelegateCommand SelectTournament2Command => _selectTournament2Command ?? (_selectTournament2Command = new DelegateCommand(SelectTournamentForPredictionAsync));
 
         private async void SelectTournamentAsync()
         {
@@ -28,5 +31,16 @@ namespace Soccer2020.Prism.ViewModels
             Settings.Tournament = JsonConvert.SerializeObject(this);
             await _navigationService.NavigateAsync("TournamentTabbedPage", parameters);
         }
+
+        private async void SelectTournamentForPredictionAsync()
+        {
+            NavigationParameters parameters = new NavigationParameters
+                {
+                    { "tournament", this }
+                };
+
+            await _navigationService.NavigateAsync(nameof(PredictionsForTournamentPage), parameters);
+        }
+
     }
 }

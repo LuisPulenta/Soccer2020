@@ -4,6 +4,7 @@ using Prism.Navigation;
 using Soccer2020.Common.Models;
 using Newtonsoft.Json;
 using Soccer2020.Common.Helpers;
+using System.Threading.Tasks;
 
 namespace Soccer2020.Prism.ViewModels
 {
@@ -47,11 +48,11 @@ namespace Soccer2020.Prism.ViewModels
 
         private async void ChangePasswordAsync()
         {
-            //var isValid = await ValidateDataAsync();
-            //if (!isValid)
-            //{
-            //    return;
-            //}
+            var isValid = await ValidateDataAsync();
+            if (!isValid)
+            {
+                return;
+            }
 
             IsRunning = true;
             IsEnabled = false;
@@ -86,6 +87,47 @@ namespace Soccer2020.Prism.ViewModels
                 response.Message,
                 "Aceptar");
             await _navigationService.GoBackAsync();
+        }
+
+        private async Task<bool> ValidateDataAsync()
+        {
+            if (string.IsNullOrEmpty(CurrentPassword))
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "Ingrese el Password actual",
+                    "Aceptar");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(NewPassword) || NewPassword?.Length < 6)
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "Ingrese un Nuevo Password",
+                    "Aceptar");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(PasswordConfirm))
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "Ingrese Confirmación de Password",
+                    "Aceptar");
+                return false;
+            }
+
+            if (NewPassword != PasswordConfirm)
+            {
+                await App.Current.MainPage.DisplayAlert(
+                    "Error",
+                    "El Nuevo Password y su Confirmación no coinciden",
+                    "Aceptar");
+                return false;
+            }
+
+            return true;
         }
 
     }
