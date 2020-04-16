@@ -3,9 +3,9 @@ using Xamarin.Forms;
 
 namespace Soccer2020.Prism.Views
 {
-    public partial class TournamentTabbedPage : TabbedPage,INavigatedAware
+    public partial class PredictionsTabbedPage : TabbedPage, INavigatedAware
     {
-        public TournamentTabbedPage()
+        public PredictionsTabbedPage()
         {
             InitializeComponent();
         }
@@ -29,5 +29,6 @@ namespace Soccer2020.Prism.Views
                 }
             }
         }
+
     }
 }

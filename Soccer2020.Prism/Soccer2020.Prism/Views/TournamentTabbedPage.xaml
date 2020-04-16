@@ -5,7 +5,6 @@
         	xmlns:local="clr-namespace:Soccer2020.Prism.Views"
         	prism:ViewModelLocator.AutowireViewModel="True"
         	x:Class="Soccer2020.Prism.Views.TournamentTabbedPage"
-          BackgroundColor="{StaticResource ColorBackground}"
         	Title="{Binding Title}">
 
   <TabbedPage.Children>

@@ -15,7 +15,7 @@ namespace Soccer2020.Prism.ViewModels
         public MatchesPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Pendientes";
-            LoadMatches();
+            //LoadMatches();
         }
 
         public List<MatchResponse> Matches
@@ -34,6 +34,13 @@ namespace Soccer2020.Prism.ViewModels
             }
 
             Matches = matches.Where(m => !m.IsClosed).OrderBy(m => m.Date).ToList();
+        }
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            _tournament = parameters.GetValue<TournamentResponse>("tournament");
+            LoadMatches();
         }
     }
 }

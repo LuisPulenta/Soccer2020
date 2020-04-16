@@ -34,7 +34,7 @@ namespace Soccer2020.Prism
             containerRegistry.RegisterForNavigation<GroupsPage, GroupsPageViewModel>();
             containerRegistry.RegisterForNavigation<MatchesPage, MatchesPageViewModel>();
             containerRegistry.RegisterForNavigation<ClosedMatchesPage, ClosedMatchesPageViewModel>();
-            containerRegistry.RegisterForNavigation<TournamentTabbedPage, TournamentTabbedPageViewModel>();
+            
             containerRegistry.RegisterForNavigation<SoccerMasterDetailPage, SoccerMasterDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<MyPredictionsPage, MyPredictionsPageViewModel>();
             containerRegistry.RegisterForNavigation<MyPositionsPage, MyPositionsPageViewModel>();
@@ -45,6 +45,11 @@ namespace Soccer2020.Prism
             containerRegistry.RegisterForNavigation<RememberPasswordPage, RememberPasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<ChangePasswordPage, ChangePasswordPageViewModel>();
             containerRegistry.RegisterForNavigation<PredictionsForTournamentPage, PredictionsForTournamentPageViewModel>();
+            containerRegistry.RegisterForNavigation<ClosedPredictionsForTournamentPage, ClosedPredictionsForTournamentPageViewModel>();
+
+
+            containerRegistry.RegisterForNavigation<PredictionsTabbedPage, PredictionsTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<TournamentTabbedPage, TournamentTabbedPageViewModel>();
         }
     }
 }

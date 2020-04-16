@@ -7,7 +7,6 @@
          	 xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
-           	 xmlns:i18n="clr-namespace:Soccer.Prism.Helpers"
              x:Class="Soccer2020.Prism.Views.MyPredictionsPage"
              BackgroundColor="{StaticResource ColorBackground}"
              Title="{Binding Title}">

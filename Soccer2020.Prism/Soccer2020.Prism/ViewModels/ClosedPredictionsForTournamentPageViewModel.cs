@@ -3,24 +3,27 @@ using Prism.Navigation;
 using Soccer2020.Common.Helpers;
 using Soccer2020.Common.Models;
 using Soccer2020.Common.Services;
+using Soccer2020.Prism;
+using Soccer2020.Prism.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace Soccer2020.Prism.ViewModels
 {
-    public class PredictionsForTournamentPageViewModel : ViewModelBase
+    public class ClosedPredictionsForTournamentPageViewModel : ViewModelBase
     {
         private readonly IApiService _apiService;
         private TournamentResponse _tournament;
         private bool _isRunning;
-        private List<PredictionItemViewModel> _predictions;
+        private ObservableCollection<PredictionItemViewModel> _predictions;
 
-        public PredictionsForTournamentPageViewModel(INavigationService navigationService, IApiService apiService)
+        public ClosedPredictionsForTournamentPageViewModel(INavigationService navigationService, IApiService apiService)
             : base(navigationService)
         {
             _apiService = apiService;
-            Title = "Predicciones para...";
+            Title = "Cerrados";
         }
 
         public bool IsRunning
@@ -29,7 +32,7 @@ namespace Soccer2020.Prism.ViewModels
             set => SetProperty(ref _isRunning, value);
         }
 
-        public List<PredictionItemViewModel> Predictions
+        public ObservableCollection<PredictionItemViewModel> Predictions
         {
             get => _predictions;
             set => SetProperty(ref _predictions, value);
@@ -39,7 +42,6 @@ namespace Soccer2020.Prism.ViewModels
         {
             base.OnNavigatedTo(parameters);
             _tournament = parameters.GetValue<TournamentResponse>("tournament");
-            //Title = $"{_tournament.Name}";
             LoadPredictionsAsync();
         }
 
@@ -53,7 +55,7 @@ namespace Soccer2020.Prism.ViewModels
                 IsRunning = false;
                 await App.Current.MainPage.DisplayAlert(
                     "Error",
-                    "Verifique su conexión a Internet",
+                    "Revise su conexión a Internet",
                     "Aceptar");
                 return;
             }
@@ -64,7 +66,7 @@ namespace Soccer2020.Prism.ViewModels
             var request = new PredictionsForUserRequest
             {
                 TournamentId = _tournament.Id,
-                UserId = new Guid(user.Id)
+                UserId = new Guid(user.Id),
             };
 
             Response response = await _apiService.GetPredictionsForUserAsync(url, "api", "/Predictions/GetPredictionsForUser", request, "bearer", token.Token);
@@ -73,25 +75,26 @@ namespace Soccer2020.Prism.ViewModels
             if (!response.IsSuccess)
             {
                 await App.Current.MainPage.DisplayAlert(
-                    "Error",
-                    response.Message,
+                     "Error",
+                     response.Message,
                     "Aceptar");
                 return;
             }
 
             List<PredictionResponse> list = (List<PredictionResponse>)response.Result;
-            Predictions = list.Select(p => new PredictionItemViewModel (_apiService)
-            {
-                GoalsLocal = p.GoalsLocal,
-                GoalsVisitor = p.GoalsVisitor,
-                Id = p.Id,
-                Match = p.Match,
-                Points = p.Points,
-                User = p.User
-            })
+            Predictions = new ObservableCollection<PredictionItemViewModel>(list
+                .Select(p => new PredictionItemViewModel(_apiService)
+                {
+                    GoalsLocal = p.GoalsLocal,
+                    GoalsVisitor = p.GoalsVisitor,
+                    Id = p.Id,
+                    Match = p.Match,
+                    Points = p.Points,
+                    User = p.User
+                })
                 .Where(p => !p.Match.IsClosed && p.Match.DateLocal > DateTime.Now)
                 .OrderBy(p => p.Match.Date)
-                .ToList();
+                .ToList());
         }
     }
 }
