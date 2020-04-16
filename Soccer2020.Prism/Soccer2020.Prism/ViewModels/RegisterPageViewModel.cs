@@ -96,8 +96,7 @@ namespace Soccer2020.Prism.ViewModels
             IsRunning = true;
             IsEnabled = false;
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
-            if (!connection)
+            if (!_apiService.CheckConnection())
             {
                 IsRunning = false;
                 IsEnabled = true;
@@ -236,8 +235,7 @@ namespace Soccer2020.Prism.ViewModels
         private async void LoadTeamsAsync()
         {
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
-            if (!connection)
+            if (!_apiService.CheckConnection())
             {
                 IsRunning = false;
                 IsEnabled = true;

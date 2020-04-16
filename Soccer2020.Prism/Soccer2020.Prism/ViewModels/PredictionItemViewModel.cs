@@ -29,8 +29,7 @@ namespace Soccer2020.Prism.ViewModels
             }
 
             string url = App.Current.Resources["UrlAPI"].ToString();
-            bool connection = await _apiService.CheckConnectionAsync(url);
-            if (!connection)
+            if (!_apiService.CheckConnection())
             {
                 await App.Current.MainPage.DisplayAlert(
                     "Error",

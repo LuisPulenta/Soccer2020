@@ -10,7 +10,7 @@ namespace Soccer2020.Common.Services
             string servicePrefix,
             string controller);
 
-        Task<bool> CheckConnectionAsync(string url);
+        bool CheckConnection();
 
         Task<Response> GetTokenAsync(string urlBase, string servicePrefix, string controller, TokenRequest request);
 

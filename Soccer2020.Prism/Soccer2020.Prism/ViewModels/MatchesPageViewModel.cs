@@ -26,7 +26,6 @@ namespace Soccer2020.Prism.ViewModels
 
         private void LoadMatches()
         {
-            _tournament = JsonConvert.DeserializeObject<TournamentResponse>(Settings.Tournament);
             List<MatchResponse> matches = new List<MatchResponse>();
             foreach (GroupResponse group in _tournament.Groups)
             {
