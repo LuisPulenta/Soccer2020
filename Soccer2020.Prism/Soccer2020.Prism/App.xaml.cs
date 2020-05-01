@@ -50,6 +50,7 @@ namespace Soccer2020.Prism
 
             containerRegistry.RegisterForNavigation<PredictionsTabbedPage, PredictionsTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<TournamentTabbedPage, TournamentTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<PositionsInTournamentPage, PositionsInTournamentPageViewModel>();
         }
     }
 }

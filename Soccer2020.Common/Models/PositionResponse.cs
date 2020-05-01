@@ -1,6 +1,6 @@
 ﻿using Soccer2020.Common.Models;
 
-namespace Soccer2000.Common.Models
+namespace Soccer2020.Common.Models
 {
     public class PositionResponse
     {

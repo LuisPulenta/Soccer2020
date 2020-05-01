@@ -88,7 +88,7 @@ namespace Soccer2020.Prism.ViewModels
                 Points = p.Points,
                 User = p.User
             })
-                .Where(p => !p.Match.IsClosed && p.Match.DateLocal > DateTime.Now)
+                .Where(p => !p.Match.IsClosed || p.Match.DateLocal > DateTime.Now)
                 .OrderBy(p => p.Match.Date)
                 .ToList();
         }

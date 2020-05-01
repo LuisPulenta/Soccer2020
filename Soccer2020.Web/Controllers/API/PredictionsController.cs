@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Soccer2000.Common.Models;
 using Soccer2020.Common.Models;
 using Soccer2020.Web.Data;
 using Soccer2020.Web.Data.Entities;
@@ -77,6 +76,7 @@ namespace Soccer2020.Web.Controllers.API
             List<MatchEntity> matches = await _context.Matches
                 .Include(m => m.Local)
                 .Include(m => m.Visitor)
+                .Include(g=>g.Group)
                 .Where(m => m.Group.Tournament.Id == request.TournamentId)
                 .ToListAsync();
             foreach (MatchEntity matchEntity in matches)
@@ -182,15 +182,27 @@ namespace Soccer2020.Web.Controllers.API
                         PositionResponse positionResponse = positionResponses.FirstOrDefault(pr => pr.UserResponse.Id == predictionEntity.User.Id);
                         if (positionResponse == null)
                         {
+                            int? pp = 0;
+
+                            if (predictionEntity.Points==null) {pp = 0;};
+                            
+                            if (!(predictionEntity.Points == null)) { pp = predictionEntity.Points; };
+                            
                             positionResponses.Add(new PositionResponse
                             {
-                                Points = predictionEntity.Points,
+                                Points = pp,
                                 UserResponse = _converterHelper.ToUserResponse(predictionEntity.User),
                             });
                         }
                         else
                         {
-                            positionResponse.Points += predictionEntity.Points;
+                            int? pp = 0;
+
+                            if (predictionEntity.Points == null) { pp = 0; };
+
+                            if (!(predictionEntity.Points == null)) { pp = predictionEntity.Points; };
+                            
+                            positionResponse.Points += pp;
                         }
                     }
                 }

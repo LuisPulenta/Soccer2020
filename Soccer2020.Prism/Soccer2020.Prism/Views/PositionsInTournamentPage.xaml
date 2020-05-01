@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+         	   xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="true"
+             x:Class="Soccer2020.Prism.Views.PositionsInTournamentPage"
+             BackgroundColor="{StaticResource ColorBackground}"
+             IconImageSource="ic_action_equalizer"
+             Title="{Binding Title}">
+
+  <AbsoluteLayout>
+    <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
+                     AbsoluteLayout.LayoutFlags="All" 
+                     Padding="5">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="60" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="60" />
+          <ColumnDefinition Width="70" />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="Foto" 
+                        VerticalOptions="Center"/>
+        <Label Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        Text="Nombre" 
+                        VerticalOptions="Center"/>
+        <Label Grid.Column="2"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalTextAlignment="End"
+                        Text="Pts" 
+                        VerticalOptions="Center"/>
+        <Label Grid.Column="3"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalTextAlignment="End"
+                        Text="Ranking" 
+                        VerticalOptions="Center"/>
+      </Grid>
+      <SearchBar Margin="10,0"
+                       Placeholder="Buscar Usuario..."
+                       SearchCommand="{Binding SearchCommand}"
+                       Text="{Binding Search}"/>
+
+      <CollectionView ItemsSource="{Binding Positions}"
+                            ItemTemplate="{StaticResource PositionTemplate}">
+        <CollectionView.ItemsLayout>
+          <GridItemsLayout Orientation="Vertical"
+                                     VerticalItemSpacing="5"/>
+        </CollectionView.ItemsLayout>
+      </CollectionView>
+
+
+
+    </StackLayout>
+    <busyindicator:SfBusyIndicator AnimationType="Gear" 
+                                        AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                	                    AbsoluteLayout.LayoutFlags="All"
+                	                    BackgroundColor="{StaticResource ColorAccent}"
+                	                    HorizontalOptions="Center"
+                	                    TextColor="{StaticResource ColorFontInverse}"
+                	                    IsVisible="{Binding IsRunning}"
+                	                    Title="Cargando..."
+                	                    VerticalOptions="Center"
+                	                    ViewBoxWidth="80"
+                	                    ViewBoxHeight="80" />
+  </AbsoluteLayout>
+
+</ContentPage>
